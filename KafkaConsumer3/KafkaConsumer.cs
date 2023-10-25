@@ -41,7 +41,7 @@ namespace KafkaConsumer3
 
 					Console.WriteLine(interval.Seconds);
 
-					if (interval <= TimeSpan.FromMinutes(5))
+					if (interval >= TimeSpan.FromMinutes(5))
 					{
 						Console.WriteLine($"{consumeResult.Message.Value.Name} {consumeResult.Message.Value.TimeWithOffset} ||| {sendTime} {currentTime}");
 						Console.Beep();
