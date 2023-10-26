@@ -72,7 +72,6 @@ namespace KafkaProduced
 			var obj = JsonConvert.SerializeObject(data);
 			var bytes = Encoding.UTF8.GetBytes(obj);
 			return bytes;
-			//throw new NotImplementedException();
 		}
 	}
 

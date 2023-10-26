@@ -31,34 +31,14 @@ namespace KafkaConsumer
 
 			public async Task StartAsync(CancellationToken cancellationToken)
 			{
-				//_consumer.Subscribe("demo-topic");
-
-				//var channel = Channel.CreateBounded<AnyData>(new BoundedChannelOptions(100) { FullMode = BoundedChannelFullMode.Wait });
-				//var reader = channel.Reader;
-				//var writer = channel.Writer;
-
-				
-				//var readProces = Task.Factory.StartNew(async () => {
-				//	while (!reader.Completion.IsCompleted)
-				//	{
-				//		//await Task.Yield();
-				//		var result = await reader.ReadAsync();
-				//		//await Task.Delay(5*60*1000);
-				//		Console.WriteLine($"{result.DateTimeOffset} {DateTime.Now.ToString("HH:mm:ss")}");
-				//	}
-				//});
-
+				await Task.Yield();
 				_consumer.Subscribe(topicName);
 				while (!cancellationToken.IsCancellationRequested)
 				{
 					var consumeResult = _consumer.Consume(cancellationToken);
 					var result = consumeResult.Message.Value;
-					
-					
-					//await writer.WriteAsync(result);
-					_logger.LogInformation($"Received >>{result.TimeWithOffset} - {result.Name} - {result.Count}");
+					_logger.LogInformation($"Received >>{result.RandomTime} - {result.RandomValue} - {result.Count}");
 				}
-				//await readProces;
 			}
 
 			public Task StopAsync(CancellationToken cancellationToken)
@@ -72,8 +52,8 @@ namespace KafkaConsumer
 
 	public class AnyData
 	{
-		public DateTimeOffset TimeWithOffset { get; set; }
-		public string Name { get; set; }
+		public TimeSpan RandomTime { get; set; }
+		public string RandomValue { get; set; }
 		public int Count { get; set; }
 	}
 

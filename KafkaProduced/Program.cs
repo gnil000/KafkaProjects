@@ -1,8 +1,6 @@
-﻿
-using KafkaProduced;
+﻿using KafkaProduced;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 
 class Program {
 
