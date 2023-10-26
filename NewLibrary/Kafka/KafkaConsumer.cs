@@ -24,16 +24,8 @@ namespace NewLibrary.Kafka
 				.Build();
 		}
 
-		//public async Task StartConsumerAsync()
-		//{
-		//	await StartAsync();
-		//	Console.ReadKey();
-		//}
-
 		public async Task StartDeferredProcessingAsync()
 		{
-			//await Task.Yield();
-
 			var channel = Channel.CreateBounded<ConsumeResult<Null, AnyData>>(new BoundedChannelOptions(100));
 			var reader = channel.Reader;
 			var writer = channel.Writer;
@@ -50,7 +42,7 @@ namespace NewLibrary.Kafka
 						Console.WriteLine(inter);
 					}
 					var result = r.Message.Value;
-					Console.WriteLine($"{r.Message.Value.ToString()} ||| {r.Message.Timestamp.UtcDateTime.ToLocalTime()} {DateTime.Now.ToString("HH:mm:ss")}");
+					Console.WriteLine($"{r.Message.Value.ToString()}");
 				}
 			});
 
@@ -61,17 +53,12 @@ namespace NewLibrary.Kafka
 				if (consumeResult != null)
 				{
 					var sendTime = consumeResult.Message.Timestamp.UtcDateTime.ToLocalTime();
-					var currentTime = DateTime.Now;
-					TimeSpan interval = currentTime - sendTime;
-					Console.WriteLine(interval.TotalMinutes);
-					if (interval >= TimeSpan.FromMinutes(1))
+					if ((sendTime-DateTime.Now) >= TimeSpan.FromMinutes(1))
 					{
-						Console.WriteLine($"{consumeResult.Message.Value.ToString()} ||| {sendTime} {currentTime}");
-						Console.Beep();
+						Console.WriteLine($"{consumeResult.Message.Value.ToString()}");
 					}
 					else
 					{
-						Console.WriteLine("Не уложено во время");
 						await writer.WriteAsync(consumeResult);
 					}
 				}

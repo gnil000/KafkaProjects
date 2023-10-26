@@ -21,7 +21,7 @@ namespace NewLibrary.Kafka
                 .Build();
         }
 
-        public async Task StartProducerAsync()
+        public async Task RunProducerAsync()
         {
             await StartAsync();
             Console.ReadKey();
@@ -43,6 +43,7 @@ namespace NewLibrary.Kafka
                     );
                 await Task.Delay(1000);
             }
+            await StopAsync();
         }
 
         public Task StopAsync()

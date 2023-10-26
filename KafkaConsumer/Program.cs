@@ -1,18 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using static KafkaConsumer.KafkaConsumer;
-
+﻿
 class Program
 {
-	static void Main(string[] args)
+	static async Task Main(string[] args)
 	{
-		CreateHostBuilder(args).Build().Run();
-		Console.ReadKey();
+		NewLibrary.Kafka.KafkaConsumer consumer = new NewLibrary.Kafka.KafkaConsumer("jsonTopic");
+		await consumer.StartAsync();
 	}
-
-	private static IHostBuilder CreateHostBuilder(string[] args) =>
-		Host
-			.CreateDefaultBuilder(args)
-			.ConfigureServices((context, collection) =>
-				collection.AddHostedService<KafkaConsumerService>());
 }

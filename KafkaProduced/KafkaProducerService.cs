@@ -3,8 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+
 
 namespace KafkaProduced
 {
